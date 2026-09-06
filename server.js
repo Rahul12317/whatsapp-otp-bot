@@ -5,19 +5,19 @@ const admin = require('firebase-admin');
 const pino = require('pino');
 const qrcode = require('qrcode-terminal');
 
-// Firebase Admin SDK Configuration - Bulletproof Setup
+// Firebase Admin SDK Configuration - Direct Environment Variables Mapping
 admin.initializeApp({
   credential: admin.credential.cert({
-    type: "service_account",
-    project_id: process.env.FIREBASE_PROJECT_ID || "venom-esports-a3a68",
-    private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID || "892fe0ff6d4e15adc86a499a313d8c8ab6c8301d",
-    private_key: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined,
-    client_email: process.env.FIREBASE_CLIENT_EMAIL || "firebase-adminsdk-fbsvc@venom-esports-a3a68.iam.gserviceaccount.com",
-    client_id: process.env.FIREBASE_CLIENT_ID || "101925882236097981031",
-    auth_uri: "https://accounts.google.com/o/oauth2/auth",
-    token_uri: "https://oauth2.googleapis.com/token",
-    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-    client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL || "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40venom-esports-a3a68.iam.gserviceaccount.com"
+    type: process.env.type || "service_account",
+    project_id: process.env.project_id || "venom-esports-a3a68",
+    private_key_id: process.env.private_key_id || "892fe0ff6d4e15adc86a499a313d8c8ab6c8301d",
+    private_key: process.env.private_key ? process.env.private_key.replace(/\\n/g, '\n') : undefined,
+    client_email: process.env.client_email || "firebase-adminsdk-fbsvc@venom-esports-a3a68.iam.gserviceaccount.com",
+    client_id: process.env.client_id || "101925882236097981031",
+    auth_uri: process.env.auth_uri || "https://accounts.google.com/o/oauth2/auth",
+    token_uri: process.env.token_uri || "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: process.env.auth_provider_x509_cert_url || "https://www.googleapis.com/oauth2/v1/certs",
+    client_x509_cert_url: process.env.client_x509_cert_url || "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40venom-esports-a3a68.iam.gserviceaccount.com"
   })
 });
 
