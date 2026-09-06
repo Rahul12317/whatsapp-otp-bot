@@ -44,7 +44,10 @@ async function connectWhatsApp() {
     const { connection, qr } = update;
     
     if (qr) {
-      console.log('QR Code aa gaya, scan karein:');
+      console.log('----------------------------------------------------');
+      console.log('QR Code aa gaya hai! Is link ko apne browser mein kholein:');
+      console.log(`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qr)}`);
+      console.log('----------------------------------------------------');
       qrcode.generate(qr, { small: true });
     }
 
@@ -59,11 +62,11 @@ async function connectWhatsApp() {
 connectWhatsApp();
 
 // API Endpoint for OTP
-app.post('/send-otp', async (req, res) => {
-  const { phone } = req.body;
+app.post('/send-otp', async (realReq, realRes) => {
+  const { phone } = realReq.body;
 
   if (!phone || phone.length !== 10) {
-    return res.status(400).json({ success: false, message: 'Invalid phone number' });
+    return realRes.status(400).json({ success: false, message: 'Invalid phone number' });
   }
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -79,10 +82,10 @@ app.post('/send-otp', async (req, res) => {
 
     await sock.sendMessage(jid, { text: message });
 
-    res.json({ success: true, message: 'OTP sent to WhatsApp successfully' });
+    realRes.json({ success: true, message: 'OTP sent to WhatsApp successfully' });
   } catch (error) {
     console.error('Error sending WhatsApp OTP:', error);
-    res.status(500).json({ success: false, message: error.message });
+    realRes.status(500).json({ success: false, message: error.message });
   }
 });
 
