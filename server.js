@@ -61,6 +61,11 @@ async function connectWhatsApp() {
 }
 connectWhatsApp();
 
+// Root route for UptimeRobot / Keep-Alive Ping
+app.get('/', (req, res) => {
+  res.status(200).send('WhatsApp OTP Bot is active and running 24/7!');
+});
+
 // API Endpoint for OTP
 app.post('/send-otp', async (realReq, realRes) => {
   const { phone } = realReq.body;
